@@ -1,0 +1,17 @@
+name: ci-smoke
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  hello:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - run: python -c "import sys, platform; print(sys.version, platform.platform())"
